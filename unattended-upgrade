@@ -1425,6 +1425,20 @@ if __name__ == "__main__":
                       default=False)
     (options, args) = parser.parse_args()
 
+    res = True
+
+    print(type(_("")))
+    body = _("Unattended upgrade returned: %s %s\n\n") % (host(), res)
+    print(body)
+    print(type(res))
+    print(type(_("Unattended upgrade returned: %s\n\n")))
+    s = _(
+            "[reboot required] unattended-upgrades result for '{}': {}").format(
+            host(), res)
+    print(s)
+
+    c = b"foo %s" % True
+    
     if os.getuid() != 0:
         print(_("You need to be root to run this application"))
         sys.exit(1)
