@@ -11,6 +11,8 @@ before_install:
  - echo "deb http://archive.ubuntu.com/ubuntu $(distro-info --stable) main"|sudo tee -a /etc/apt/sources.list.d/added.list
  - sudo apt-get update -q
  - sudo apt-get install build-essential
- - sudo apt-get install -q --no-install-recommends gdebi-core python-apt
+ - sudo apt-get install -q --no-install-recommends gdebi-core python-apt 
+ - gdebi -q --apt-line ./debian/control
+ - sudo apt-get install -q dh-systemd
  - sudo apt-get install -q build-essential $(gdebi -q --apt-line ./debian/control)
 script: ./debian/rules build-arch
