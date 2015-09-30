@@ -10,9 +10,8 @@ before_install:
  - sudo apt-get install distro-info
  - echo "deb http://archive.ubuntu.com/ubuntu $(distro-info --stable) main"|sudo tee -a /etc/apt/sources.list.d/added.list
  - sudo apt-get update -q
- - sudo apt-get install build-essential
- - sudo apt-get install -q --no-install-recommends gdebi-core python-apt 
- - gdebi -q --apt-line ./debian/control
- - sudo apt-get install -q dh-systemd
+ - sudo apt-get install -q --no-install-recommends gdebi-core
  - sudo apt-get install -q build-essential $(gdebi -q --apt-line ./debian/control)
-script: ./debian/rules build-arch
+# gdebi-core does not support Build-Dep-Indep
+ - sudo apt-get install python python3-distutils-extra python3-setuptools python-dev python3-dev python-coverage pep8 pyflakes python-apt python3-apt python-mock python3-mock lsb-release dh-systemd
+script: ./debian/rules binary
