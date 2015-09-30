@@ -10,6 +10,8 @@ before_install:
  - sudo apt-get install distro-info
  - echo "deb http://archive.ubuntu.com/ubuntu $(distro-info --stable) main"|sudo tee -a /etc/apt/sources.list.d/added.list
  - sudo apt-get update -q
+# the horror the horror
+ - sudo rm /etc/dpkg/dpkg.cfg.d/multiarch
  - sudo apt-get install dpkg
  # ideally we would use "$(gdebi -q --apt-line debian/control)" here but
  # thats currently broken (in vivid)
