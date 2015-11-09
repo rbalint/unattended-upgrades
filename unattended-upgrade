@@ -159,6 +159,7 @@ class LogInstallProgress(apt.progress.base.InstallProgress):
 
     def status_change(self, pkg, percent, status):
         with open(self.progress_log, "w") as f:
+            print(pkg, percent)
             f.write(_("Progress: %s %% (%s)") % (percent, pkg))
 
     def _fixup_fds(self):
