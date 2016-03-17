@@ -1158,6 +1158,11 @@ def main(options, rootdir=""):
     # setup logging
     mem_log = _setup_logging(options)
 
+    # check if we should run at all (for the systemd timer unit)
+    if (options.run_only_when_enabled and
+        apt_pkg.config.find_i("APT::Periodic::Unattended-Upgrade", 0) == 0):
+        return
+
     # check if today is a patch day
     if not is_update_day():
         return
@@ -1480,6 +1485,10 @@ if __name__ == "__main__":
                       help=_("Upgrade in minimal steps (and allow "
                              "interrupting with SIGINT"))
     parser.add_option("", "--minimal_upgrade_steps",
+                      action="store_true",
+                      help=SUPPRESS_HELP,
+                      default=False)
+    parser.add_option("", "--run-only-when-enabled",
                       action="store_true",
                       help=SUPPRESS_HELP,
                       default=False)

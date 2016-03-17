@@ -1,0 +1,10 @@
+[Unit]
+Description=Unattended Upgrades daily
+Documentation=man:unattended-upgrade(8)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/unattended-upgrades --run-only-when-enabled
+
+[Install]
+WantedBy=multi-user.target

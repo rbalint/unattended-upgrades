@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs unattended-upgrades every day
+
+[Timer]
+OnUnitInactiveSec=daily
+RandomizedDelaySec=30m
+Unit=unattended-upgrades-run.service
+
+[Install]
+WantedBy=multi-user.target
