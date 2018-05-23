@@ -1,3 +1,12 @@
+unattended-upgrades (1.2ubuntu1) cosmic; urgency=medium
+
+  * Merge from Debian unstable
+    - Remaining changes:
+      - unattended-upgrades: Do not automatically upgrade the development
+        release of Ubuntu unless Unattended-Upgrade::DevRelease is true.
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Wed, 23 May 2018 22:37:35 +0200
+
 unattended-upgrades (1.2) unstable; urgency=medium
 
   [ Michael Vogt ]
