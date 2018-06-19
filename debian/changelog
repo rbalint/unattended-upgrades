@@ -1,3 +1,11 @@
+unattended-upgrades (1.3ubuntu3) cosmic; urgency=medium
+
+  * Stop rewriting test apt.conf in test_untrusted.py.
+    This fixes overwriting Unattended-Upgrade::OnlyOnACPower "false" accidentally
+    and breaking the build.
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Tue, 19 Jun 2018 21:24:40 +0200
+
 unattended-upgrades (1.3ubuntu2) cosmic; urgency=medium
 
   * Fix test_on_battery on Ubuntu development releases
