@@ -1,3 +1,13 @@
+unattended-upgrades (1.3ubuntu1) cosmic; urgency=medium
+
+  * Merge from Debian unstable
+    - Now candidate adjustment is really fixed (LP: #1775292)
+    - Remaining changes:
+      - unattended-upgrades: Do not automatically upgrade the development
+        release of Ubuntu unless Unattended-Upgrade::DevRelease is true.
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Tue, 19 Jun 2018 15:08:21 +0200
+
 unattended-upgrades (1.3) unstable; urgency=medium
 
   [ Balint Reczey ]
