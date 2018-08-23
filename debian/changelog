@@ -1,3 +1,16 @@
+unattended-upgrades (1.5ubuntu1) cosmic; urgency=medium
+
+  * Merge from Debian unstable
+    - Remaining changes:
+      - unattended-upgrades: Do not automatically upgrade the development
+        release of Ubuntu unless Unattended-Upgrade::DevRelease is true.
+    - Dropped changes, included in Debian:
+      - Redirect stderr output in upgrade-all-security and
+        upgrade-between-snapshots otherwise it breaks the test
+      - Skip rebuilding python-apt in upgrade autopkgtests
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Thu, 23 Aug 2018 11:02:51 +0200
+
 unattended-upgrades (1.5) unstable; urgency=medium
 
   * Redirect stderr output in upgrade-all-security and upgrade-between-snapshots
