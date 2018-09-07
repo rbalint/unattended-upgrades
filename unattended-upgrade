@@ -989,19 +989,6 @@ def wrap(t, width=70, subsequent_indent=""):
     return out
 
 
-def setup_apt_listchanges(conf="/etc/apt/listchanges.conf"):
-    # type: (str) -> None
-    """ deal with apt-listchanges """
-    # apt-listchanges will always send a mail if there is a mail address
-    # set in the config regardless of the frontend used, so set it to
-    # mail if we have a sendmail and to none if not (as it appears to
-    # not check if sendmail is there or not), debian bug #579733
-    if os.path.exists(SENDMAIL_BINARY):
-        os.environ["APT_LISTCHANGES_FRONTEND"] = "mail"
-    else:
-        os.environ["APT_LISTCHANGES_FRONTEND"] = "none"
-
-
 def _send_mail_using_mailx(from_address, to_address, subject, body):
     # type: (str, str, str, str) -> int
     # ensure that the body is a byte stream and that we do not
@@ -1131,8 +1118,6 @@ def do_install(cache,             # type: apt.Cache
                logfile_dpkg,      # type: str
                ):
     # type: (...) -> bool
-
-    setup_apt_listchanges()
 
     logging.info(_("Writing dpkg log to %s"), logfile_dpkg)
 
