@@ -22,7 +22,6 @@ from unattended_upgrade import (
     get_dpkg_log_content,
     LoggingDateTime,
     send_summary_mail,
-    setup_apt_listchanges,
 )
 
 
@@ -205,16 +204,6 @@ Debian-Security']
             in mail_txt)
         self.assertFalse(
             "Packages that attempted to upgrade:\n 2vcard" in mail_txt)
-
-    def test_apt_listchanges(self):
-        # test with sendmail available
-        unattended_upgrade.SENDMAIL_BINARY = "/bin/true"
-        setup_apt_listchanges("./data/listchanges.conf.mail")
-        self.assertEqual(os.environ["APT_LISTCHANGES_FRONTEND"], "mail")
-        # test without sendmail
-        unattended_upgrade.SENDMAIL_BINARY = "/bin/not-here-xxxxxxxxx"
-        setup_apt_listchanges("./data/listchanges.conf.pager")
-        self.assertEqual(os.environ["APT_LISTCHANGES_FRONTEND"], "none")
 
     def test_summary_mail_from_address(self):
         apt_pkg.config.set("Unattended-Upgrade::Sender", "rootolv")
