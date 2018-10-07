@@ -1,3 +1,18 @@
+unattended-upgrades (1.5ubuntu3) cosmic; urgency=medium
+
+  * Skip already adjusted packages from being checked for readjusting.
+    This makes it clearer that the recursion ends and can also be a bit quicker.
+    (LP: #1790687)
+  * Fix PEP 8 warnings.
+    Also ignore "W503 line break before binary operator" because it will
+    become the best practice.
+  * Don't crash on missing dpkg log file (LP: #1795692)
+  * do_auto_remove() is successful unless a commit() operation fails
+    (LP: #1795696)
+  * Check only dowloaded .deb files for conffile prompts (LP: #1796100)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Sun, 07 Oct 2018 23:16:17 +0200
+
 unattended-upgrades (1.5ubuntu2) cosmic; urgency=medium
 
   * Reopen Cache after commit() even when frontend locking is supported.
