@@ -160,6 +160,25 @@ class UnattendedUpgradesCache(apt.Cache):
             self.versioned_kernel_pkgs_regexp = None
             self.running_kernel_pkgs_regexp = None
 
+    def collect_origins(self):
+        origins = {}
+        for pkg in self:
+            for pf in self._cache.file_list:
+                origins[pf.id] = apt.package.Origin(pkg, pf)
+            break
+        return origins
+
+    def open(self, progress=None):
+        # type: (apt.progress.base.Progress) -> None
+        apt.Cache.open(self, progress)
+        if not hasattr(apt.Cache, "_origins"):
+            self._origins = self.collect_origins()
+        # apply pinning for not allowed origins
+        for _id, origin in self._origins.items():
+            if not is_allowed_origin(origin, self.allowed_origins):
+                self._depcache.policy.create_pin('Origin', '*',
+                                                 str(origin), -1)
+
     def adjust_candidate(self, pkg):
         # type: (apt.Package) -> bool
         """ Adjust origin and return True if adjustment took place
@@ -204,8 +223,8 @@ class UnattendedUpgradesCache(apt.Cache):
         for marked_pkg in changes:
             if marked_pkg.name in self._cached_candidate_pkgnames:
                 continue
-            if not is_allowed_origin(marked_pkg.candidate,
-                                     self.allowed_origins):
+            if not is_in_allowed_origin(marked_pkg.candidate,
+                                        self.allowed_origins):
                 try:
                     ver_in_allowed_origin(marked_pkg,
                                           self.allowed_origins)
@@ -727,14 +746,20 @@ def upgrade_in_minimal_steps(cache,            # type: apt.Cache
     return True
 
 
-def is_allowed_origin(ver, allowed_origins):
+def is_allowed_origin(origin, allowed_origins):
+    for allowed in allowed_origins:
+        if match_whitelist_string(allowed, origin):
+            return True
+    return False
+
+
+def is_in_allowed_origin(ver, allowed_origins):
     # type: (apt.package.Version, List[str]) -> bool
     if not ver:
         return False
     for origin in ver.origins:
-        for allowed in allowed_origins:
-            if match_whitelist_string(allowed, origin):
-                return True
+        if is_allowed_origin(origin, allowed_origins):
+            return True
     return False
 
 
@@ -749,7 +774,7 @@ def ver_in_allowed_origin(pkg, allowed_origins):
                 continue
         except AttributeError:
             pass
-        if is_allowed_origin(ver, allowed_origins):
+        if is_in_allowed_origin(ver, allowed_origins):
             # leave as soon as we have the highest new candidate
             return ver
     raise NoAllowedOriginError()
@@ -819,7 +844,7 @@ def check_changes_for_sanity(cache, allowed_origins, blacklist, whitelist,
             if not any([o.trusted for o in pkg.candidate.origins]):
                 logging.debug("pkg %s is untrusted" % pkg.name)
                 return False
-            if not is_allowed_origin(pkg.candidate, allowed_origins):
+            if not is_in_allowed_origin(pkg.candidate, allowed_origins):
                 logging.debug("pkg %s not in allowed origin" % pkg.name)
                 return False
             if not is_pkg_change_allowed(pkg, blacklist, whitelist):
