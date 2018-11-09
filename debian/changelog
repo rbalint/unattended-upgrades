@@ -1,3 +1,19 @@
+unattended-upgrades (1.8) UNRELEASED; urgency=medium
+
+  * Add note about increasing InhibitDelayMaxSec for InstallOnShutdown to
+    50unattended-upgrades.
+  * 50unattended-upgrades.Ubuntu: Fix alignment
+  * Add NEWS entry about increasing InhibitDelayMaxSec and InstallOnShutdown
+    changes
+  * Revert to WantedBy=multi-user.target from 1.5ubuntu3 and 1.7, too, on
+    Ubuntu. 1.5ubuntu4 is the first fixed version on Ubuntu and 1.7 did not
+    upgrade properly from 1.5ubuntu3.
+  * List commented-out default values in 50unattended-upgrades config file.
+    Always list the default value commented out unless the explanation clearly
+    states the default value.
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Fri, 09 Nov 2018 18:09:22 +0100
+
 unattended-upgrades (1.7) unstable; urgency=medium
 
   [ Nils Toedtmann ]
