@@ -1,4 +1,4 @@
-unattended-upgrades (1.11) unstable; urgency=medium
+unattended-upgrades (1.10ubuntu1) disco; urgency=medium
 
   * Use defaults in unattended-upgrades.service when the APT configuration is
     broken. (LP: #1815189)
