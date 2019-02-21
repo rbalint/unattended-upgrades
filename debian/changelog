@@ -1,3 +1,12 @@
+unattended-upgrades (1.5ubuntu3.18.10.2) cosmic; urgency=medium
+
+  * Clear cache when autoremoval fails (LP: #1779157)
+  * Find autoremovable kernel packages using the patterns in APT's way
+    (LP: #1815494)
+  * Filter out progress indicator from dpkg log (LP: #1599646)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Thu, 21 Feb 2019 15:10:13 +0100
+
 unattended-upgrades (1.5ubuntu3.18.10.1) cosmic; urgency=medium
 
   * Start service after systemd-logind.service to be able to take inhibition
