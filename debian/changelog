@@ -1,3 +1,17 @@
+unattended-upgrades (1.10ubuntu2) disco; urgency=medium
+
+  * Compare apt.package.Version objects and not the versions' string
+    representation. (LP: #1820888)
+    This prevented adjusting candidates when the strings sorted differently.
+    Also extend tests to catch issue.
+  * Fall back to adjusting more packages' candidates
+    when a package from an allowed origin can't be marked to install/upgrade.
+    (LP: #1821101)
+  * Skip sending email when no package had to be installed, upgraded or removed
+    (LP: #1821103) (Closes: #924554)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Fri, 22 Mar 2019 20:42:08 +0100
+
 unattended-upgrades (1.10ubuntu1) disco; urgency=medium
 
   * Use defaults in unattended-upgrades.service when the APT configuration is
