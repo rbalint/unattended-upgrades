@@ -86,4 +86,22 @@ echo "Failing here does not make the whole test fail because the root cause can 
 enable_pocket "$chroot_dir" proposed
 chroot_exec "$chroot_dir" apt-get update
 
-chroot_exec "$chroot_dir" unattended-upgrade --verbose --debug || true
+proposed_pkgs=$(grep-dctrl -! -r -P 'linux-.*' -n -s Package "$chroot_dir"/var/lib/apt/lists/*proposed*Packages)
+
+disable_pocket "$chroot_dir" proposed
+chroot_exec "$chroot_dir" apt-get update
+
+to_install=""
+for i in $proposed_pkgs; do
+    if chroot_exec "$chroot_dir" apt-cache show $i 2>&1 | grep -q Package; then
+        to_install="$to_install $i"
+    fi
+done
+
+chroot_exec "$chroot_dir" apt-get install -y -q aptitude
+yes 2>/dev/null | chroot_exec "$chroot_dir" aptitude install -y -q $to_install 2>&1
+
+enable_pocket "$chroot_dir" proposed
+chroot_exec "$chroot_dir" apt-get update
+
+chroot_exec "$chroot_dir" unattended-upgrade --verbose --debug 2>&1 || true
