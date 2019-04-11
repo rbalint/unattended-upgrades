@@ -1,3 +1,11 @@
+unattended-upgrades (1.10ubuntu3) disco; urgency=medium
+
+  * Detect changes to moved conffiles (LP: #1823872)
+  * Add tests for checking conffile moves.
+    Build depend on and use equivs to generate new test packages
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Thu, 11 Apr 2019 22:48:00 +0200
+
 unattended-upgrades (1.10ubuntu2) disco; urgency=medium
 
   * Compare apt.package.Version objects and not the versions' string
