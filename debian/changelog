@@ -1,3 +1,15 @@
+unattended-upgrades (1.10ubuntu5) disco; urgency=medium
+
+  * Adjust only transitive dependencies in the fallback
+    when a package from an allowed origin can't be marked to install/upgrade.
+    This is a much lighter approach than marking every upgradable package because
+    the full fallback was triggered on packages held back as well, using an
+    excessive amount of CPU time.
+    Also it crashed with packages not having any version in allowed origins.
+    (LP: #1824804, #1824949)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Tue, 16 Apr 2019 08:54:49 +0200
+
 unattended-upgrades (1.10ubuntu4) disco; urgency=medium
 
   * Make sure autoremovals don't start with a dirty cache and remove other
