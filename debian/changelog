@@ -1,3 +1,18 @@
+unattended-upgrades (1.10ubuntu6) UNRELEASED; urgency=medium
+
+  * Add ${distro_id}ESM:${distro_codename}-security to allowed origins
+    (LP: #1823376)
+  * Skip trying to upgrade held packages in call_adjusted() (LP: #1824804)
+  * Follow all kinds of transitive dependencies when adjusting dependencies
+  * Split() conffile data to set of names only once
+  * Don't parse dpkg conffile db when there are no conffiles in the package
+  * Detect unchanged moved conffiles.
+    When a package moves a conffile properly without any change no conffile
+    prompt needs to be shown thus the package can be upgraded unattended even
+    when the conffile is changed locally. (LP: #1823872)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Thu, 18 Apr 2019 17:46:32 +0200
+
 unattended-upgrades (1.10ubuntu5) disco; urgency=medium
 
   * Adjust only transitive dependencies in the fallback
