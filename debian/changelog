@@ -28,7 +28,7 @@ unattended-upgrades (1.5ubuntu3.18.10.4) cosmic; urgency=medium
     - Follow all kinds of transitive dependencies when adjusting dependencies
     - Don't crash collecting transitive dependencies when package has no
       candidate (LP: #1825886)
-  * Skip trying to upgrade held packages in call_adjusted() (LP: #182480)
+  * Skip trying to upgrade held packages in call_adjusted() (LP: #1824804)
   * Use mark_install_adjusted() in rewind_cache()
     The original cache had packages marked with adjustments thus rewinding
     should also do adjustments to reach the same state.
