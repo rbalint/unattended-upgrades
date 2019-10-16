@@ -1,3 +1,15 @@
+unattended-upgrades (1.10ubuntu5.2) disco; urgency=medium
+
+  * Report packages kept back by origin (LP: #1821376)
+  * Store list of kept packages and report the number of them in motd
+    (LP: #1823070)
+  * Default to "/" as rootdir to fix saving list of kept packages.
+    Thanks to Paul Wise (Closes: #932160) (LP: #1823070)
+  * debian/tests/control: Mark upgrade-between-snapshots as flaky
+    (Closes: #941752) (LP: #1848354)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Fri, 18 Oct 2019 13:22:02 +0200
+
 unattended-upgrades (1.10ubuntu5.1) disco; urgency=medium
 
   * Skip trying to upgrade held packages in call_adjusted() (LP: #1824804)
