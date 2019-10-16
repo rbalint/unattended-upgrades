@@ -1,3 +1,10 @@
+unattended-upgrades (1.14ubuntu1.1) eoan; urgency=medium
+
+  * debian/tests/control: Mark upgrade-between-snapshots as flaky
+    (Closes: #941752) (LP: #1848354)
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Wed, 16 Oct 2019 17:47:42 +0200
+
 unattended-upgrades (1.14ubuntu1) eoan; urgency=medium
 
   * autopkgtest: Retry failing downloads a few times
