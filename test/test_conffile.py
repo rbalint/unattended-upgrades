@@ -10,7 +10,7 @@ apt_pkg.config.set("Dir", "./aptroot")
 
 from unattended_upgrade import (
     conffile_prompt,
-    dpkg_conffile_prompt,
+    get_prevent_dpkg_conffile_prompt,
 )
 
 
@@ -120,15 +120,15 @@ class DpkgConffileTestCase(unittest.TestCase):
         apt_pkg.config.clear("DPkg::Options")
 
     def test_no_dpkg_prompt_option(self):
-        self.assertTrue(dpkg_conffile_prompt())
+        self.assertTrue(get_prevent_dpkg_conffile_prompt())
 
     def test_regression_lp1061498(self):
         apt_pkg.config.set("DPkg::Options::", "muup")
-        self.assertTrue(dpkg_conffile_prompt())
+        self.assertTrue(get_prevent_dpkg_conffile_prompt())
 
     def test_dpkg_will_never_prompt(self):
         apt_pkg.config.set("DPkg::Options::", "--force-confold")
-        self.assertFalse(dpkg_conffile_prompt())
+        self.assertFalse(get_prevent_dpkg_conffile_prompt())
 
 
 if __name__ == "__main__":

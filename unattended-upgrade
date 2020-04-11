@@ -153,6 +153,7 @@ class UnattendedUpgradesCache(apt.Cache):
         # type: (str) -> None
         self._cached_candidate_pkgnames = set()  # type: Set[str]
 
+        self.prevent_dpkg_conffile_prompt = get_prevent_dpkg_conffile_prompt()
         self.allowed_origins = get_allowed_origins()
         logging.info(_("Allowed origins are: %s"),
                      ", ".join(self.allowed_origins))
@@ -1314,7 +1315,7 @@ def conffile_prompt(destFile, prefix=""):
     return False
 
 
-def dpkg_conffile_prompt():
+def get_prevent_dpkg_conffile_prompt():
     # type: () -> bool
     if "DPkg::Options" not in apt_pkg.config:
         return True
@@ -2195,7 +2196,7 @@ def run(options,             # type: Options
         cache.clear()
 
     pkg_conffile_prompt = False
-    if dpkg_conffile_prompt():
+    if cache.prevent_dpkg_conffile_prompt:
         # now check the downloaded debs for conffile conflicts and build
         # a blacklist
         conffile_blacklist = []  # type: List[str]
