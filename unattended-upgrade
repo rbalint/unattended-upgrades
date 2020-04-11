@@ -143,6 +143,10 @@ class NoAllowedOriginError(ValueError):
     pass
 
 
+class UpgradeInterruptedError(Exception):
+    pass
+
+
 PkgPin = namedtuple('PkgPin', ['pkg', 'priority'])
 PkgFilePin = namedtuple('PkgFilePin', ['id', 'priority'])
 
@@ -1981,8 +1985,11 @@ def main(options, rootdir="/"):
         return 1
 
     try:
-        res = run(options, rootdir, mem_log, logfile_dpkg,
-                  install_start_time)
+        try:
+            res = run(options, rootdir, mem_log, logfile_dpkg,
+                      install_start_time)
+        except UpgradeInterruptedError:
+            res = UnattendedUpgradesResult(False, _("Upgrade was interrupted"))
 
         if res.success and res.result_str:
             # complete, successful run
@@ -2050,7 +2057,7 @@ def run(options,             # type: Options
 
     # check if u-u should be stopped already
     if should_stop():
-        return UnattendedUpgradesResult(False)
+        raise UpgradeInterruptedError()
 
     # check to see if want to auto-upgrade the devel release
     if apt_pkg.config.find("Unattended-Upgrade::DevRelease") == "auto":
