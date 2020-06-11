@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: codecov/codecov-action@v1
     - name: setup
       run: |
         sudo apt-get update
@@ -20,3 +21,21 @@ jobs:
     - name: autopkgtest
       # skipping tests is ok
       run: sudo autopkgtest -U ../build-area/*.dsc -- lxd autopkgtest/ubuntu/focal/amd64 || [ $? == 2 ]
+  coverage:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup
+      run: |
+        sudo apt-get update
+        sudo apt-get install git-buildpackage
+        sudo apt-get build-dep .
+    - name: build
+      run: |
+        gbp buildpackage -us -uc --git-ignore-branch --git-export-dir=
+        cd test
+        python3-coverage xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: test/coverage.xml
