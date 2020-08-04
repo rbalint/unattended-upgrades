@@ -3,7 +3,7 @@ Maintainer: Michael Vogt <mvo@debian.org>
 Uploaders: Balint Reczey <rbalint@ubuntu.com>
 Section: admin
 Priority: optional
-Build-Depends: debhelper (>= 9.20160709),
+Build-Depends: debhelper-compat (= 12),
                equivs,
                po-debconf,
                python3,
