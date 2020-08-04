@@ -5,7 +5,7 @@ DIST=$(shell dpkg-vendor --query Vendor)
 TARGET_DIST=$(shell dpkg-parsechangelog -S Distribution)
 
 %:
-	dh $@ --with=systemd
+	dh $@
 
 override_dh_auto_build:
 	# copy the right template into place
