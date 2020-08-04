@@ -1,24 +1,18 @@
 #!/usr/bin/make -f
 
-PYTHON=python3
 DIST=$(shell dpkg-vendor --query Vendor)
 TARGET_DIST=$(shell dpkg-parsechangelog -S Distribution)
 
 %:
-	dh $@
+	dh $@ --buildsystem=pybuild
 
 override_dh_auto_build:
 	# copy the right template into place
 	cp data/50unattended-upgrades.$(DIST) data/50unattended-upgrades
-	$(PYTHON) setup.py build
+	dh_auto_build
 
 override_dh_auto_test:
 	$(MAKE) -C test
-
-override_dh_auto_install:
-	$(PYTHON) setup.py install \
-		--root=$(CURDIR)/debian/unattended-upgrades \
-		--install-layout=deb
 
 override_dh_installinit:
 	# We do not want to run the init script in the postinst/prerm, its
@@ -44,7 +38,7 @@ endif
 		py3compile $$f.py; \
 		rm -f $$f.py; \
 	done
-	$(PYTHON) setup.py clean -a
+	./setup.py clean -a
 	rm -rf .coverage \
 		test/.coverage \
 		test/.mypy_cache \
