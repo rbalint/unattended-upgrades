@@ -5,7 +5,7 @@ DIST=$(shell dpkg-vendor --query Vendor)
 TARGET_DIST=$(shell dpkg-parsechangelog -S Distribution)
 
 %:
-	dh $@ --with=systemd
+	dh $@
 
 override_dh_auto_build:
 	# copy the right template into place
@@ -20,10 +20,10 @@ override_dh_auto_install:
 		--root=$(CURDIR)/debian/unattended-upgrades \
 		--install-layout=deb
 
-override_dh_installinit:
+override_dh_installsystemd:
 	# We do not want to run the init script in the postinst/prerm, its
 	# really only useful on shutdown, see Debian bug #645919.
-	dh_installinit -r --no-start
+	dh_installsystemd --no-stop-on-upgrade --no-start
 
 override_dh_auto_clean:
 	# Sanity-check before upload.
